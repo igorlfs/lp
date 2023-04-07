@@ -1,0 +1,9 @@
+# Lixo do Latex
+*/discursivas.*
+
+!*/discursivas.tex
+!*/discursivas.pdf
+
+# Lixo do SML
+*/*.ud
+*/*.du

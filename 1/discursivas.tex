@@ -1,0 +1,44 @@
+\documentclass{article}
+
+\usepackage{hyperref}               % Use hyperlinks
+
+\usepackage[T1]{fontenc}            % Codificação para português 
+\usepackage[portuguese]{babel}      % Português
+
+\usepackage{hyphenat}               % Use hifens corretamente
+\hyphenation{mate-mática recu-perar}
+
+\usepackage{fancyhdr} % Header estilo DCC
+
+\setlength{\headheight}{24pt} % O LaTeX reclama sem isso
+
+\author{Igor Lacerda Faria da Silva}
+
+\begin{document}
+
+\pagestyle{fancy}
+\lhead{Prof. Haniel Barbosa \\ Linguagens de Progração}
+\rhead{DCC / ICEx / UFMG \\ 2023.1}
+
+\begin{center}
+    \textbf{Atividade - Lista 1}
+\end{center}
+
+\begin{enumerate}
+\setcounter{enumi}{13}
+  \item Ordem: da esquerda para a direita.
+    \begin{itemize}
+      \item Tipo 1, pois o par é do tipo (Inteiro, Real)
+      \item  Primeiro: é usado o mesmo tipo de par de antes, (Inteiro, Real) (tipo 1). Segundo: como o resultado do primeiro é um Real, é gerado um par (Real, Inteiro) (tipo 3).
+      \item Segundo: é avaliado antes do primeiro, resultando em um real (tipo 3). Primeiro: com o resultado, o cálculo atua sobre o par (Inteiro, Real), sendo do tipo 1.
+      \item Primeiro: (Inteiro, Inteiro) $\mapsto$ Inteiro, tipo 2. Segundo: (Inteiro, Real), sendo o inteiro do par anterior, portanto tipo 1. Quarto: antece o terceiro pelo parêntes, (Real, Inteiro) $\mapsto$ Real, tipo 3. Terceiro: esquerda é real pelo segundo '+' e direita pelo quarto '+', logo, tipo 4.
+    \end{itemize}
+  \item 
+    \begin{enumerate}
+      \item Toda expressão em SML que possui um \texttt{if} precisa ter um \texttt{else}.
+      \item Não é possível usar o operador \texttt{*} com tipos diferentes, \texttt{int} e \texttt{float}.
+      \item Como o casamento dos padrões é feito de baixo pra cima, não é possível que o padrão do 0 seja atingido.
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
