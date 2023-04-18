@@ -1,0 +1,132 @@
+\documentclass{article}
+
+\usepackage{hyperref}               % Use hyperlinks
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage[T1]{fontenc}            % Codificação para português 
+\usepackage[portuguese]{babel}      % Português
+
+\usepackage{hyphenat}               % Use hifens corretamente
+\hyphenation{mate-mática recu-perar}
+
+\usepackage{fancyhdr} % Header estilo DCC
+
+\setlength{\headheight}{24pt} % O LaTeX reclama sem isso
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\LARGE\@title\par}
+    \vskip 0.5em
+    {\large\begin{tabular}[t]{c}\@author\end{tabular}\par}
+    \vskip 1em
+    {\large\textbf{\@date}\par}
+    \vskip 1em
+  \end{center}
+}
+
+% Define the WHILE language
+\lstdefinelanguage{WHILE}
+{
+  morekeywords={while, do, end, if, then, else, mod},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+}
+
+% Set up the code block
+\lstset{
+  language=WHILE,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray},
+  stringstyle=\itshape\color{blue},
+  showstringspaces=false,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=5pt,
+  tabsize=2,
+  escapechar=|,
+}
+
+\title{Universidade Federal de Minas Gerais
+
+Ciência da Computação}
+\author{Igor Lacerda Faria da Silva}
+\date{Lista de Exercícios 2}
+
+\begin{document}
+
+\pagestyle{fancy}
+\lhead{DCC024 Linguagens de Progração}
+\rhead{2023.1}
+
+\maketitle
+
+\section*{Binding, escopo}
+
+\begin{enumerate}
+  \item 
+    \begin{enumerate}
+      \item Estático: 1
+      \item Dinâmico: 2
+    \end{enumerate}
+  \item 
+    \begin{enumerate}
+      \item Existem 5 blocos: o bloco da função g, o bloco \textit{let...in} exterior, o bloco da função f, o bloco da função h e o seu \textit{let...in} interior.
+      \item Os nomes definidos pelo programa são: g, x, inc, f, y, h, z.
+      \item 
+        \begin{itemize}
+          \item g: bloco 1
+          \item x: bloco 1
+          \item inc: bloco 2
+          \item f: bloco 2
+          \item y: bloco 3
+          \item h: bloco 2
+          \item z: bloco 4
+          \item inc: bloco 5 (shadow)
+        \end{itemize}
+      \item O valor de g 5 é 6. Se SML possuísse escopo dinâmico, seria 7. Esses valores seriam diferentes pois se o escopo fosse dinâmico, as atribuições seriam usadas conforme a execução do programa, ou seja, chegaria-se em h, que redefine inc, e essa nova definição que seria usada em f.
+    \end{enumerate}
+    \setcounter{enumi}{4}
+  \item  
+    \begin{enumerate}
+      \item Apesar de correta, essa solução não é idiomática, pois não usa \textit{pattern matching}.
+      \item Os caracteres de pipe não querem aparecer :(
+        \begin{lstlisting}[language=ML]  
+fun good_max (xs: int list) : int =
+  case xs of
+  [] => 0
+  [x] => x
+  x :: xs' =>
+    let val max_rest = max xs'
+    in if x > max_rest then x else max_rest
+    end;
+        \end{lstlisting}
+    \end{enumerate}
+  \item  O valor impresso é 9.
+  \item 
+\begin{lstlisting}
+fun expr () : int =
+  let
+    val x = 1
+  in
+    let
+      val x = 2
+      val x = x + 1
+      val y = x + 2
+      val y = y + 1
+    in
+      x + y
+    end
+  end;
+\end{lstlisting}
+\end{enumerate}
+
+\end{document}
