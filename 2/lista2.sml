@@ -124,26 +124,35 @@ fun simplify (Op2 (Add, IConst 0, e)) = simplify e
   | simplify (Op2 (Mul, IConst 0, _)) = IConst 0
   | simplify (Op2 (Mul, _, IConst 0)) = IConst 0
   | simplify (Op2 (Sub, e1, e2)) =
-      if (e1 = e2) then IConst 0 else (Op2 (Sub, e1, e2))
+      let
+        val e1_s = (simplify e1);
+        val e2_s = (simplify e2)
+      in
+        if (e1_s = e2_s) then (IConst 0)
+        else if ((e1 = e1_s) andalso (e2 = e2_s)) then (Op2 (Sub, e1, e2))
+        else (simplify (Op2 (Sub, e1_s, e2_s)))
+      end
+  | simplify (Op1 (Not, Op1 (Not, e))) = (simplify e)
   | simplify (Op2 (Or, e1, e2)) =
-      if (e1 = e2) then simplify e1 else (Op2 (Or, e1, e2))
-  | simplify (Op1 (Not, Op1 (Not, e1))) = simplify e1
-  | simplify e =
-      case e of
-        (Op1 (OP, e1)) =>
-          let val f1 = simplify e1;
-          in if (f1 = e1) then e else simplify (Op1 (OP, f1))
-          end
-      | (Op2 (OP, e1, e2)) =>
-          let
-            val f1 = simplify e1
-            val f2 = simplify e2
-          in
-            if (f1 = e1) andalso (f2 = e2) then e
-            else simplify (Op2 (OP, f1, f2))
-          end
-      | _ => e;
-
+      let
+        val e1_s = (simplify e1);
+        val e2_s = (simplify e2)
+      in
+        if (e1_s = e2_s) then e1_s else (Op2 (Or, e1_s, e2_s))
+      end
+  | simplify (Op1 (Not, e)) =
+      let val e_s = (simplify e)
+      in if (e = e_s) then (Op1 (Not, e)) else (simplify (Op1 (Not, e_s)))
+      end
+  | simplify (Op2 (Op, e1, e2)) =
+      let
+        val e1_s = (simplify e1);
+        val e2_s = (simplify e2)
+      in
+        if ((e1 = e1_s) andalso (e2 = e2_s)) then (Op2 (Op, e1, e2))
+        else (simplify (Op2 (Op, e1_s, e2_s)))
+      end
+  | simplify e = e;
 
 val e1 = Op2 (Mul, Op2 (Add, IConst 1, IConst 0), Op2 (Add, IConst 9, IConst 0));
 simplify e1;
@@ -209,17 +218,8 @@ split [1, 2, 3, 8, 4, 5];
 (**************)
 
 fun expr () : int =
-  let
-    val x = 1
-  in
-    let
-      val x = 2
-      val x = x + 1
-      val y = x + 2
-      val y = y + 1
-    in
-      x + y
-    end
+  let val x = 1
+  in let val x = 2 in x + 1 end + let val y = x + 2 in y + 1 end
   end;
 
 expr ();
