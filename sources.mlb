@@ -3,3 +3,5 @@
 (* Que, automaticamente configura o Millet para rodar como projeto *)
 ./1/lista1.sml
 ./2/lista2.sml
+./3/08.sml
+./3/14.sml

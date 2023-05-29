@@ -1,0 +1,114 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}            % Codificação para português 
+\usepackage[portuguese]{babel}      % Português
+\usepackage{hyphenat}               % Use hifens corretamente
+\usepackage{fancyhdr} % Header estilo DCC
+\usepackage{algpseudocode}
+
+\setlength{\headheight}{24pt} % O LaTeX reclama sem isso
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\LARGE\@title\par}
+    \vskip 0.5em
+    {\large\begin{tabular}[t]{c}\@author\end{tabular}\par}
+    \vskip 1em
+    {\large\textbf{\@date}\par}
+    \vskip 1em
+  \end{center}
+}
+
+\title{Universidade Federal de Minas Gerais
+
+Ciência da Computação}
+\author{Igor Lacerda Faria da Silva}
+\date{Lista de Exercícios 3}
+
+\begin{document}
+
+\pagestyle{fancy}
+\lhead{DCC024 Linguagens de Programação}
+\rhead{2023.1}
+
+\maketitle
+
+\begin{enumerate}
+  \item Letra B: o programa em si e os estados que ele mantém
+  \item 
+    \begin{enumerate}
+      \item V
+      \item ?
+      \item F
+      \item F
+      \item V
+      \item V
+      \item ?
+      \item V
+    \end{enumerate}
+  \item 
+    \begin{enumerate}
+      \item 
+        \begin{itemize}
+          \item \texttt{valor\_inicial}: pilha
+          \item \texttt{valor\_intermediario}: pilha
+          \item \texttt{taxa}: pilha
+          \item \texttt{valores}: heap
+        \end{itemize}
+      \item \texttt{valores = [25, 75, 15]}
+    \end{enumerate}
+  \item
+    \begin{itemize}
+      \item \textit{mark and sweep, copying collector, reference counting}. Um exemplo onde o \textit{reference counting} é o mais adequado:
+        \begin{algorithmic}
+          \State $a \gets \textrm{Obj}$
+
+          \State $b \gets *a$
+
+          \State $c \gets *a$
+
+          \State $d \gets *a$
+        \end{algorithmic}
+        Nesse caso, é interessante usar a contagem de referência pois existem muitas referências ao mesmo objeto, o que seria mais custoso nos outros métodos.
+    \end{itemize}
+  \item VPL
+  \item VPL
+  \item 
+    \begin{enumerate}
+      \item Polimorfismo paramétrico e de sobrecarga (de operadores).
+      \item Não apresenta problema de memória, porque a memória é liberada pelo destrutor da classe \texttt{auto\_ptr}. Confirmado com uso do \textit{valgrind}.
+      \item Também não há problema de memória. A exceção é disparada e é capturada no bloco \texttt{try...catch}, e a memória é liberada no destrutor da classe \texttt{auto\_ptr}, que é chamado mesmo quando exceções são capturadas. Confirmado com uso do \textit{valgrind}.
+      \item Nesse caso, há problema de memória. A classe \texttt{auto\_ptr} não é chamada, e a memória não é liberada, pois o \texttt{delete} nunca é alcançado (apenas o destrutor de \texttt{string*}). Desse modo, existe memória alocada que não foi liberada. Confirmado com uso do \textit{valgrind}.
+    \end{enumerate}
+  \item VPL
+  \item VPL
+  \item VPL
+  \item \begin{enumerate}
+      \item O objeto passado para este método deve implementar os métodos \texttt{isNotEmpty()} e \texttt{remove()}.
+      \item A ideia por trás do \textit{duck typing} é que se um objeto implementa os métodos necessários para uma determinada operação, então esse objeto pode ser usado naquela operação, mesmo que ele não seja de uma classe específica. Sua relação com o método do item anterior é que o uso do \textit{duck typing} pressupõe que o contrato é respeitado.
+    \end{enumerate}
+  \item
+    \begin{enumerate}
+      \item Pavão is an animal
+      \item Tigre is a mammal
+      \item Krypto is a dog
+      \item Pavão, which is an animal, is eating.
+      \item Tigre, which is a mammal, is sucking milk.
+      \item Tigre, which is an animal, is eating.
+      \item Krypto is barking rather loudly.
+      \item Krypto, which is a mammal, is sucking milk.
+      \item Krypto barks when it eats.
+
+        Krypto is barking rather loudly.
+      \item Erro de execução.
+      \item Nunca é alcançado, mas se a linha com erro fosse comentada:
+
+        Krypto is barking rather loudly.
+    \end{enumerate}
+  \item O “Problema do Diamante” ocorre quando uma classe é herdeira de pelo menos duas classes, sendo que essas classes possuem um ancestral em comum. É preciso definir uma ordem para a resolução de conflitos de herança. Por exemplo: se as duas classes possuem um método com o mesmo nome, é necessário decidir qual método usar. A ordem de resolução de conflitos é definida na linguagem, a critério do projetista da linguagem.
+  \item VPL
+  \item VPL
+\end{enumerate}
+
+\end{document}

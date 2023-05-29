@@ -1,9 +1,15 @@
 # Lixo do Latex
 */discursivas.*
+*/respostas.*
 
 !*/discursivas.tex
 !*/discursivas.pdf
+!*/respostas.tex
+!*/respostas.pdf
 
 # Lixo do SML
 */*.ud
 */*.du
+
+# Executáveis
+3/a.out
