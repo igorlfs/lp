@@ -1,0 +1,232 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}            % Codificação para português 
+\usepackage[portuguese]{babel}      % Português
+\usepackage{hyphenat}               % Use hifens corretamente
+\usepackage{fancyhdr}               % Header estilo DCC
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\setlength{\headheight}{24pt} % O LaTeX reclama sem isso
+
+\makeatletter
+\renewcommand{\maketitle}{%
+    \begin{center}
+        {\LARGE\@title\par}
+        \vskip 0.5em
+        {\large\begin{tabular}[t]{c}\@author\end{tabular}\par}
+        \vskip 1em
+        {\large\textbf{\@date}\par}
+        \vskip 1em
+    \end{center}
+}
+
+\title{Universidade Federal de Minas Gerais
+
+Ciência da Computação}
+\author{Igor Lacerda Faria da Silva}
+\date{Lista de Exercícios 4}
+
+\begin{document}
+
+\pagestyle{fancy}
+\lhead{DCC024 Linguagens de Programação}
+\rhead{2023.1}
+
+\maketitle
+
+\begin{enumerate}
+
+    \section*{Passagem de Parâmetros}
+
+    \item \begin{enumerate}
+            \item É impresso o número 5.
+            \item Será impresso o número 7, pois a variável \texttt{y} e a variável \texttt{z} apontariam para o mesmo endereço. Dessa maneira, a variável global \texttt{x} manteria sua contribuição de 1 para a soma, mas o valor comum da referência dos parâmetros seria incrementado duas vezes.
+        \end{enumerate}
+    \item Não, eu não diria que é um mecanismo bastante utilizado em C
+        \begin{enumerate}
+            \item
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main(int argc, char **argv) {
+    printf("sum = %d\n", (argc) + (argv[0][0]));
+}
+\end{lstlisting}
+            \item A captura de variáveis ocorre quando uma macro recebe dois ou mais argumentos iguais e, durante a expansão, as variáveis são `misturadas', o que pode causar um comportamento indesejado.
+            \item 
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+#define LIGMA(X) (X) = (X) + 1, (X) = 2 * (X)
+
+int main(void) {
+  int x = 0;
+  printf("ligma = %d", LIGMA(x));
+}
+\end{lstlisting}
+
+        \end{enumerate}
+        \item 
+            \begin{enumerate}
+                \item 30
+                \item O programa lê um um inteiro $a$ da entrada e calcula a soma do quadrado das frações $ \frac{1}{i+a} $ com $i$ variando de 1 até 100.
+            \end{enumerate}
+        \item 
+            \begin{enumerate}
+                \item m1: 4, m2: 3
+                \item m1: 4, m2: 3
+                \item m1: 4, m2: 4
+                \item Passagem por referência.
+                \item Passagem por cópia.
+            \end{enumerate}
+
+    \end{enumerate}
+
+    \section*{Programação Lógica}
+
+    \begin{enumerate}
+        \item 
+            \begin{enumerate}
+                \item 
+\begin{lstlisting}[language=prolog]
+firstCousin(X, Y) :-
+  parent(P1, X),
+  parent(P2, Y),
+  P1 \= P2,               % X e Y têm pais diferentes
+  \+ sibling(X, Y).       % X e Y não são irmãos
+\end{lstlisting}    
+
+                \item 
+\begin{lstlisting}[language=prolog]
+descendant(X, Y) :- parent(Y, X).
+descendant(X, Y) :- parent(Z, X), descendant(Z, Y).
+\end{lstlisting}
+            \end{enumerate}
+
+            \item 
+\begin{lstlisting}[language=prolog]
+third(X, Y) :- X = [_, _, Y|_].
+\end{lstlisting}
+
+            \item 
+\begin{lstlisting}[language=prolog]
+dupList([], []).
+dupList([H|T], [H, H|X]) :- dupList(T, X).
+\end{lstlisting}
+
+            \item 
+\begin{lstlisting}[language=prolog]
+isEqual([], []).
+isEqual(X, Y) :- permutation(X, Y).
+\end{lstlisting}
+
+            \item 
+\begin{lstlisting}[language=prolog]
+isDifference([], _, []).
+isDifference([X|Xs], Y, Z) :-
+  member(X, Y),
+  isDifference(Xs, Y, Z).
+isDifference([X|Xs], Y, [X|Z]) :-
+  not_member(X, Y),
+  isDifference(Xs, Y, Z).
+
+not_member(_, []).
+not_member(X, [Y|Ys]) :-
+  X \= Y,
+  not_member(X, Ys).
+\end{lstlisting}
+            \item 
+                \begin{enumerate}[I]
+                    \item 
+                        Assumindo a negação da cláusula a ser demonstrada: 
+
+                        $\sim$ (append(X, Y, [1, 2]))
+                    \item Aplicando a negação na primeira cláusula do predicado append:
+
+                        $\sim$ (append([], Y, [1, 2]))
+                    \item Aplicando a negação na segunda cláusula do predicado append:
+
+                        $\sim$ (append([Head|TailA], Y, [1, 2])) :- $\sim$ (append(TailA, Y, TailC))
+                    \item 
+                        Aplicando a negação na primeira cláusula do predicado append novamente:
+
+                        $\sim$ (append([Head|TailA], Y, [1, 2])) :- $\sim$ (append(TailA, Y, TailC)), $\sim$ (Head = 1), $\sim$ (TailC = [2])
+                    \item 
+                        Aplicando a negação em Head = 1:
+
+                        $\sim$ (append([Head|TailA], Y, [1, 2])) :- $\sim$ (append(TailA, Y, TailC)), Head $\neq$ 1, $\sim$ (TailC = [2])
+
+                    \item 
+                        Aplicando a negação em TailC = [2]:
+
+                        $\sim$ (append([Head|TailA], Y, [1, 2])) :- $\sim$ (append(TailA, Y, TailC)), Head $\neq$ 1, TailC $\neq$ [2]
+
+                    \item 
+                        Unificando a cláusula negada com a primeira cláusula do predicado append:
+                        append([], Y, [1, 2])
+
+                    \item 
+                        Unificando a primeira cláusula com os termos correspondentes:
+
+                        Y = [1, 2]
+
+                        Contradição: com a unificação em VIII, temos Y igual a [1, 2], o que contradiz a negação em VI (TailC $\neq$ [2]).
+
+                \end{enumerate}
+
+            \item 
+\begin{lstlisting}[language=prolog]
+maxList([X], X).
+maxList([X|Xs], M) :-
+  maxList(Xs, Max),
+  (X > Max -> M = X ; M = Max).
+\end{lstlisting}
+
+            \item 
+\begin{lstlisting}[language=prolog]
+nqueens(N, X) :-
+  length(X, N),
+  X ins 1..N,
+  safe_queens(X).
+
+safe_queens([]).
+safe_queens([Q|Queens]) :-
+  safe_queens(Queens, Q, 1),
+  safe_queens(Queens).
+
+safe_queens([], _, _).
+safe_queens([Q|Queens], Q0, D0) :-
+  Q0 #\= Q,
+  abs(Q0 - Q) #\= D0,
+  D1 #= D0 + 1,
+  safe_queens(Queens, Q0, D1).
+\end{lstlisting}
+    \end{enumerate}
+\end{document}
