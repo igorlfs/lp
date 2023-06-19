@@ -119,8 +119,8 @@ int main(void) {
 firstCousin(X, Y) :-
   parent(P1, X),
   parent(P2, Y),
-  P1 \= P2,               % X e Y têm pais diferentes
-  \+ sibling(X, Y).       % X e Y não são irmãos
+  not(P1=P2),
+  not(sibling(X, Y)).
 \end{lstlisting}    
 
                 \item 
@@ -159,7 +159,7 @@ isDifference([X|Xs], Y, [X|Z]) :-
 
 not_member(_, []).
 not_member(X, [Y|Ys]) :-
-  X \= Y,
+  not(X=Y),
   not_member(X, Ys).
 \end{lstlisting}
             \item 
@@ -213,7 +213,8 @@ maxList([X|Xs], M) :-
 \begin{lstlisting}[language=prolog]
 nqueens(N, X) :-
   length(X, N),
-  X ins 1..N,
+  numlist(1, N, Domain),
+  permutation(Domain, X),
   safe_queens(X).
 
 safe_queens([]).
@@ -223,9 +224,9 @@ safe_queens([Q|Queens]) :-
 
 safe_queens([], _, _).
 safe_queens([Q|Queens], Q0, D0) :-
-  Q0 #\= Q,
-  abs(Q0 - Q) #\= D0,
-  D1 #= D0 + 1,
+  Q0 =\= Q,
+  abs(Q0 - Q) =\= D0,
+  D1 is D0 + 1,
   safe_queens(Queens, Q0, D1).
 \end{lstlisting}
     \end{enumerate}
